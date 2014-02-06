@@ -49,12 +49,13 @@ public class Console {
 			client.setServerAddress(serverAddress);
 			
 			addEC2Cloud(client, rootPassword);
-			//initEC2CloudDefaults(client);
-			//addEC2CloudCosts(client);
+			client.setBasicCredentialsFilter("root", rootPassword);
+			initEC2CloudDefaults(client);
+			addEC2CloudCosts(client);
 			
 			addHPCloud(client, rootPassword);
-			//initHPCloudDefaults(client);
-			//addCloudCostsHP(client);			
+			initHPCloudDefaults(client);
+			addCloudCostsHP(client);			
 			
 			Map map = client.searchCloudByName("HPZone1");
 			String id = URIUtil.getIdFromUri((String)map.get("uri"));
@@ -74,9 +75,9 @@ public class Console {
 		String myName = "EC2";
 		String description = "Amazon Elastic Compute Service";
 		String location = "https://ec2.amazonaws.com";
-		String factory = "https://ec2factory.appspot.com/resources/virtualServer";
-		String factoryId = "fred";
-		String mySecret = "3hyebbehg56yeh5";
+		String factory = "https://ec2factory-dev.appspot.com/resources/virtualServer";
+		String factoryId = "foo";
+		String mySecret = "secret";
 		
 		client.addCloud(myName, description, location, factory, factoryId, mySecret, "instanceType");		
 	}
@@ -105,7 +106,7 @@ public class Console {
 		
 	public static void initEC2CloudDefaults(N3pheleClient client)  {
 		for(String[] s : EC2Defaults) {	
-			ClientResponse result = client.setCloudParameter("EC2", s[0], s[3], s[2]);
+			ClientResponse result = client.setCloudParameter("EC2", s[0], s[4], s[2]);
 		}
 	}
 	
@@ -119,7 +120,7 @@ public class Console {
 	 
 	public static void initHPCloudDefaults(N3pheleClient client)  {
 		for(String[] s : HPCloudDefaults) {	
-			ClientResponse result = client.setCloudParameter("HPZone1", s[0], s[3], s[2]);
+			ClientResponse result = client.setCloudParameter("HPZone1", s[0], s[4], s[2]);
 		}
 	}
 	
